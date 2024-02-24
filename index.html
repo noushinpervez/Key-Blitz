@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Blitz</title>
+
+    <link rel="shortcut icon" href="./images/crystal.png" type="image/png">
+
+    <!-- tailwind and daisyUI cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- quicksand font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .quicksand {
+            font-family: "Quicksand", sans-serif;
+        }
+    </style>
+
+    <!-- tailwind custom colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                        primary: '#2F2941',
+                        hover: '#A12EFF',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-[url('./images/bg.svg')] bg-no-repeat bg-cover bg-center text-center quicksand">
+    <main>
+        <!-- homepage -->
+        <section id="homepage" class="text-primary">
+            <div class="min-h-screen flex flex-col justify-center items-center gap-7">
+                <h3 class="animate-bounce text-9xl font-bold">KEY BLITZ</h3>
+                <p class="text-2xl font-semibold leading-7">Unleash Your Keyboard KungFu: Click to Play</p>
+                <button onclick="play()"
+                    class="animate-pulse btn bg-primary text-white text-2xl font-semibold leading-7 px-8 mt-7 hover:bg-hover hover:scale-110 hover:ease-in-out hover:delay-300">Play
+                    Now</button>
+            </div>
+        </section>
+        <!-- playground -->
+        <section id="playground" class="hidden">
+            <div class="flex px-2">
+                <label class="swap btn-circle">
+                    <!-- this hidden checkbox controls the state -->
+                    <input onclick="muteUnmute()" class="tooltip tooltip-bottom" data-tip="Mute" type="checkbox" />
+                    <!-- volume on icon -->
+                    <svg class="swap-on fill-current" xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
+                    </svg>
+                    <!-- volume off icon -->
+                    <svg class="swap-off fill-current" xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M3,9H7L12,4V20L7,15H3V9M16.59,12L14,9.41L15.41,8L18,10.59L20.59,8L22,9.41L19.41,12L22,14.59L20.59,16L18,13.41L15.41,16L14,14.59L16.59,12Z" />
+                    </svg>
+                </label>
+            </div>
+            <!-- screen -->
+            <div class="flex flex-col items-center gap-24">
+                <div id="art-board"
+                    class="artboard artboard-horizontal phone-6 border-[10px] border-primary/90 rounded-2xl bg-white/20 mt-24">
+                    <div class="flex justify-center">
+                        <p id="text"
+                            class="text-lg font-medium leading-5 bg-primary/90 text-white rounded-sm px-7 pb-4 pt-1 rounded-b-xl">
+                            Press the Esc key to quit the game.</p>
+                    </div>
+                    <div class="flex justify-center items-center h-full">
+                        <p id="current-alphabet" class="text-9xl font-semibold uppercase"></p>
+                    </div>
+                </div>
+                <!-- keyboard -->
+                <div class="font-bold">
+                    <div class="flex justify-center gap-1 my-1 w-full">
+                        <kbd id="q" class="kbd">q</kbd>
+                        <kbd id="w" class="kbd">w</kbd>
+                        <kbd id="e" class="kbd">e</kbd>
+                        <kbd id="r" class="kbd">r</kbd>
+                        <kbd id="t" class="kbd">t</kbd>
+                        <kbd id="y" class="kbd">y</kbd>
+                        <kbd id="u" class="kbd">u</kbd>
+                        <kbd id="i" class="kbd">i</kbd>
+                        <kbd id="o" class="kbd">o</kbd>
+                        <kbd id="p" class="kbd">p</kbd>
+                    </div>
+                    <div class="flex justify-center gap-1 my-1 w-full">
+                        <kbd id="a" class="kbd">a</kbd>
+                        <kbd id="s" class="kbd">s</kbd>
+                        <kbd id="d" class="kbd">d</kbd>
+                        <kbd id="f" class="kbd">f</kbd>
+                        <kbd id="g" class="kbd">g</kbd>
+                        <kbd id="h" class="kbd">h</kbd>
+                        <kbd id="j" class="kbd">j</kbd>
+                        <kbd id="k" class="kbd">k</kbd>
+                        <kbd id="l" class="kbd">l</kbd>
+                    </div>
+                    <div class="flex justify-center gap-1 my-1 w-full">
+                        <kbd id="z" class="kbd">z</kbd>
+                        <kbd id="x" class="kbd">x</kbd>
+                        <kbd id="c" class="kbd">c</kbd>
+                        <kbd id="v" class="kbd">v</kbd>
+                        <kbd id="b" class="kbd">b</kbd>
+                        <kbd id="n" class="kbd">n</kbd>
+                        <kbd id="m" class="kbd">m</kbd>
+                    </div>
+                </div>
+                <!-- life score -->
+                <div class="flex justify-between w-4/5">
+                    <button
+                        class="btn bg-primary/90 text-white text-xl font-medium leading-6 px-8 rounded-3xl hover:bg-hover">
+                        Life
+                        <i class="fa-solid fa-heart-circle-bolt"></i>
+                        <span id="current-life">3</span>
+                    </button>
+                    <button
+                        class="btn bg-primary/90 text-white text-xl font-medium leading-6 px-8 rounded-3xl hover:bg-hover">
+                        Score
+                        <i class="fa-solid fa-star"></i>
+                        <span id="current-score">0</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- score -->
+        <section id="game-over" class="text-primary flex items-center justify-center min-h-screen hidden">
+            <div class="bg-white/20 border border-primary rounded-2xl px-16 py-10 flex gap-4 flex-col">
+                <div>
+                    <h3 class="text-xl font-semibold">Game Over!</h3>
+                </div>
+                <div>
+                    <h1 class="text-6xl font-bold" style="line-height: 120%;">Score: <span id="game-score"></span></h1>
+                </div>
+                <div class="flex gap-4">
+                    <div><button onclick="play()"
+                            class="animate-pulse btn bg-primary text-white text-2xl font-semibold leading-7 px-8 mt-7 hover:bg-hover hover:scale-110 hover:ease-in-out hover:delay-300">Play
+                            Again</button></div>
+                    <div><button onclick="home()"
+                            class="btn bg-primary text-white text-2xl font-semibold leading-7 px-8 mt-7 hover:bg-hover hover:scale-110 hover:ease-in-out hover:delay-300">Go
+                            Home</button>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold" style="line-height: 120%;">Practice will make you Pro</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="./scripts/utility.js"></script>
+    <script src="./scripts/key-blitz.js"></script>
+</body>
+
+</html>
